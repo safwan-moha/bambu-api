@@ -18,10 +18,13 @@ peopleRouter.get('/', (req, res) => {
     if (experienced != undefined)
         benchMark.experienced = experienced;
 
-    readCSV.then(cvsData => {
-        const matches = findBestMatch(benchMark, cvsData);
-        res.send(matches);
-    });
+    if (Object.entries(benchMark).length === 0 && benchMark.constructor === Object)
+        res.send({ "people like you": [] });
+    else
+        readCSV.then(cvsData => {
+            const matches = findBestMatch(benchMark, cvsData);
+            res.send({ "people like you": matches });
+        });
 })
 
 

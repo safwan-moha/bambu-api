@@ -45,7 +45,7 @@ const calculateScore = ({ age, latitude, longitude, monthlyIncome, experienced }
     const scoreLat = getPercentage(latitude, item.latitude);
     const scoreLon = getPercentage(longitude, item.longitude);
     const scoreInc = getPercentage(monthlyIncome, item.monthlyIncome);
-    const scoreExp = getPercentageBoolean(experienced, item.experienced);
+    const scoreExp = experienced === item.experienced ? 1 : 0;
     const score = getAverage([scoreAge, scoreExp, scoreInc, scoreLat, scoreLon]);
     return { ...item, score }
 };
@@ -56,10 +56,6 @@ const getPercentage = (val1_, val2_) => {
     const val1 = Math.abs(val1_);
     const val2 = Math.abs(val2_);
     return val1 > val2 ? (val2 / val1) : (val1 / val2);
-}
-
-const getPercentageBoolean = (val1, val2) => {
-    return val1 === val2 ? 1 : 0;
 }
 
 const getAverage = numberArr => {
