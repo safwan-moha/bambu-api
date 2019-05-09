@@ -19,7 +19,7 @@ const readCSV = new Promise((resolve, reject) => {
     let skipFirstRow = true;
     fs.createReadStream('./app/utils/data.csv')
         .pipe(parse({ delimiter: ':' }))
-        .on('data', function (csvrow) {
+        .on('data', csvrow => {
             const row = csvrow[0].split(',');
             if (skipFirstRow) {
                 skipFirstRow = false;
@@ -32,10 +32,10 @@ const readCSV = new Promise((resolve, reject) => {
                 experienced: row[5] === 'true' ? 1 : 0
             });
         })
-        .on('end', function () {
+        .on('end', () => {
             resolve(csvData);
         })
-        .on('error', function (err) {
+        .on('error', err => {
             reject(err);
         });
 });
