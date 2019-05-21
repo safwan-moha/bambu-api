@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const { appParams } = require('./app/utils/config');
 const peopleRouter = require('./app/routers/peopleRouter');
 const cors = require('cors');
+var swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
+
 
 const app = express();
 
@@ -16,6 +19,7 @@ const allowCrossDomain = function(req, res, next) {
 app.use(allowCrossDomain);
 app.use(bodyParser.json());
 app.options('*', cors())
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req, res) => res.send('Bambu API 1.1v'))
 app.get('/health', (req, res) => res.send('Health-check: Bambu API 1.1v . Rand: ' + Math.random()))
